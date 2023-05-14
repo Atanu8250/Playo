@@ -159,13 +159,15 @@ const updateEvent = async (req, res) => {
                               res.status(400).send({ message: 'Application already accepted' });
                               return;
                          } else {
-                              if (update.status === 'accepted') {
-                                   await EventModel.findByIdAndUpdate(eventId, { participants: [...updateEvent.participants, update.addParticipant] })
-                              }
                               // UPDATE THE APPLICATION STATUS FOR THE USER
                               const applications = await ApplicationModel.find({ user: update.addParticipant, event: eventId });
                               const application = applications[0];
-                              application.status = update.status;
+
+                              if (update.status === 'accepted' && updateEvent.participants.length < updateEvent.limit) {
+                                   await EventModel.findByIdAndUpdate(eventId, { participants: [...updateEvent.participants, update.addParticipant] })
+                                   application.status = 'accepted';
+                              } else application.status = 'rejected';
+                              
                               await application.save();
                          }
                     } else {

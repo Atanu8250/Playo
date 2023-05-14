@@ -9,7 +9,7 @@ const getOptions = async (req, res) => {
      try {
           const countries = await EventModel.aggregate([{ $group: { _id: null, countries: { $addToSet: '$country' } } }]);
           const states = await EventModel.aggregate([{ $group: { _id: null, states: { $addToSet: '$state' } } }]);
-          res.status(200).send({ message: 'success', data: { topics: countries[0].countries, states: states[0].states } });
+          res.status(200).send({ message: 'success', data: { countries: countries[0].countries, states: states[0].states } });
      } catch (error) {
           console.log('error:', error)
           res.status(500).send({
@@ -93,7 +93,7 @@ const getSpecificEvent = async (req, res) => {
      const eventId = req.params.eventId;
 
      try {
-          let event = await EventModel.findById(eventId).populate({ path: 'participants', select: '-password' }).exec();
+          let event = await EventModel.findById(eventId).populate('participants', '-password').populate('organisedBy', '-password').exec();
           res.status(200).send({ message: 'successful', data: event });
      } catch (error) {
           console.log('error:', error)
@@ -107,7 +107,7 @@ const getSpecificEvent = async (req, res) => {
 
 
 /**
- * CREATE EVENT BY PROVIDING THE EVENT IN req.body
+ * CREATE EVENT BY PROVIDING THE `EVENT` IN `req.body`
  * */
 const createEvent = async (req, res) => {
      const event = req.body;

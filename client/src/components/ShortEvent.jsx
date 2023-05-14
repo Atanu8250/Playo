@@ -1,43 +1,32 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import style from '../styles/Home.module.css';
-import Modal from './Modal';
-import EventDetails from './EventDetails';
+import { Link } from 'react-router-dom';
 
 
 // Get local date and time
 function getDateAndTime(createdAt) {
      const dateAndTime = new Date(createdAt);
      const [date, time] = dateAndTime.toLocaleTimeString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }).split(", ");
-     return { date, time };
+     return `${time} | ${date}`;
 }
 
 
-function ShortEvent({ event: { _id, title, description, createdAt, limit, participants, country } }) {
-     const { date, time } = getDateAndTime(createdAt);
-
-     const showModal = useCallback(() => {
-          document.querySelector('dialog').showModal();
-     }, [])
-
-
+function ShortEvent({ event: { _id, title, description, createdAt, limit, participants, startTime } }) {
 
      return (
-          <>
-               <article className={style.Event} onClick={showModal}>
+          <Link to={`/event/${_id}`}>
+               <article className={style.Event} >
                     <div>
                          <h2>{title}</h2>
                          <h4>{description}</h4>
                     </div>
                     <div>
-                         <b><bdi>Country:</bdi> {country}</b>
-                         <p>Participants: {participants.length}/{limit}</p>
-                         <i>Created at: {time} | {date} </i>
+                         <p><bdi>Participants:</bdi> {participants.length}/{limit}</p>
+                         <p><bdi>Start at:</bdi> {getDateAndTime(startTime)}</p>
+                         <i><bdi>Created at:</bdi> {getDateAndTime(createdAt)} </i>
                     </div>
                </article>
-               <Modal>
-                    <EventDetails id={_id} />
-               </Modal>
-          </>
+          </Link>
      )
 }
 

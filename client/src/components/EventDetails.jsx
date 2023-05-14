@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import style from '../styles/Home.module.css';
 
 
@@ -10,14 +11,14 @@ function getDateAndTime(createdAt) {
 }
 
 
-function EventDetails({ id }) {
-     console.log('id:', id)
+function EventDetails() {
+     const { eventId } = useParams();
+
      const [details, setDetails] = useState("")
-     console.log('details:', details)
 
      const getDetails = useCallback(async () => {
           try {
-               const res = await fetch(`${import.meta.env.VITE_APP_SERVER_URL}/event/${id}`, {
+               const res = await fetch(`${import.meta.env.VITE_APP_SERVER_URL}/event/${eventId}`, {
                     headers: {
                          'Content-Type': 'application/json',
                          'authorization': sessionStorage.getItem("TOKEN")
@@ -27,15 +28,36 @@ function EventDetails({ id }) {
                const data = await res.json();
 
                if (res.ok) {
-                    console.log('event deatails', data.data)
                     setDetails(data.data);
                } else {
                     alert(data.message);
                }
           } catch (error) {
                console.log('error:', error)
+               alert(error.message);
           }
-     }, [id])
+     }, [eventId])
+
+
+     const applyForEvent = useCallback(async () => {
+          try {
+               const res = await fetch(`${import.meta.env.VITE_APP_SERVER_URL}/application/${eventId}`, {
+                    headers: {
+                         'Content-Type': 'application/json',
+                         'authorization': sessionStorage.getItem("TOKEN")
+                    }
+               })
+
+               const data = await res.json();
+
+               alert(data.message);
+          } catch (error) {
+               console.log('error:', error)
+               alert(error.message);
+          }
+     }, []);
+
+
 
      useEffect(() => {
           getDetails();
@@ -43,7 +65,7 @@ function EventDetails({ id }) {
 
 
      return (
-          <article className={style.ModalEventDetails}>
+          <article className={style.EventDetails}>
                <table>
                     <tbody>
                          <tr>
@@ -70,6 +92,10 @@ function EventDetails({ id }) {
                               <th>Limit</th>
                               <td>{details?.limit}</td>
                          </tr>
+                    </tbody>
+               </table>
+               <table>
+                    <tbody>
                          <tr>
                               <th>Organised by</th>
                               <td>{details?.organisedBy?.username}</td>
@@ -90,9 +116,14 @@ function EventDetails({ id }) {
                               <th>CreatedAt</th>
                               <td>{getDateAndTime(details?.createdAt)}</td>
                          </tr>
+                         <tr>
+                              <th></th>
+                              <td>
+                                   <button onClick={applyForEvent} disabled={details?.limit === details?.participants?.length}>Apply for the event</button>
+                              </td>
+                         </tr>
                     </tbody>
                </table>
-               <button>Apply to the event</button>
           </article>
      )
 }

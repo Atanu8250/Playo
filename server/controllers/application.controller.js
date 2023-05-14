@@ -4,11 +4,16 @@ const EventModel = require("../models/event.model");
 
 /**
  * GET ALL APPLICATIONS FOR SPECIFIC USER
- * */ 
+ * */
 const allApplicationsForSpecificUser = async (req, res) => {
      const userId = req.headers.userId;
+     let filterObj = { user: userId };
+     if (req.query.status) filterObj.status = req.query.status;
+
      try {
-          const applications = await ApplicationModel.find({ user: userId }).populate('event');
+          const applications = await ApplicationModel.find(filterObj).populate({
+               path: 'event'
+          });
           res.status(200).send({ message: 'success', data: applications });
      } catch (error) {
           console.log('error:', error)
@@ -22,7 +27,7 @@ const allApplicationsForSpecificUser = async (req, res) => {
 
 /**
  * APPLY FOR SPECIFIC EVENT
- * */ 
+ * */
 const applyForSpecificEvent = async (req, res) => {
      const eventId = req.params.eventId;
      const userId = req.headers.userId;
@@ -38,6 +43,7 @@ const applyForSpecificEvent = async (req, res) => {
                res.status(200).send({ message: 'Sorry, Events participant limit reached!' })
           } else {
                const applications = await ApplicationModel.find({ event: eventId, user: userId });
+               console.log('applications:', applications)
 
                if (applications.length) {
                     res.status(400).send({ message: `Your application is already in ${applications[0].status} status` })
@@ -60,12 +66,11 @@ const applyForSpecificEvent = async (req, res) => {
 /**
  * GET ALL THE APPLIED USERS FOR SPECIFIC EVENT
  * * PENDING APPLICATIONS
- * */ 
+ * */
 const appliedUsersForSpecificEvent = async (req, res) => {
      const eventId = req.params.eventId;
      try {
-          const pendingParticipants = await ApplicationModel.find({ status: 'pending', event: eventId }).select(['user']);
-          console.log('pendingParticipants:', pendingParticipants)
+          const pendingParticipants = await ApplicationModel.find({ status: 'pending', event: eventId }).select(['user']).populate('user', '-password');
           res.status(200).send({ message: 'success', data: pendingParticipants });
      } catch (error) {
           console.log('error:', error)

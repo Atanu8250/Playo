@@ -7,7 +7,8 @@ const initialState = {
           message: ''
      },
      events: [],
-     options: {}
+     options: {},
+     myEvents: []
 }
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -23,6 +24,10 @@ export const reducer = (state = initialState, { type, payload }) => {
 
           case eventTypes.EVENT_SUCCESS: {
                return { ...state, events: payload, loading: false, error: { status: false, message: "" } };
+          }
+
+          case eventTypes.MY_EVENTS_SUCCESS: {
+               return { ...state, myEvents: payload, loading: false, error: { status: false, message: "" } };
           }
 
           case eventTypes.EVENT_OPTIONS_SUCCESS: {

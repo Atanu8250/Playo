@@ -10,12 +10,15 @@ function Home() {
      const dispatch = useDispatch()
      const { events, options } = useSelector(store => store.eventsManager);
      const [queryUrl, setQueryUrl] = useState("");
+
      const searchRef = useRef(null);
      const countryRef = useRef(null);
      const stateRef = useRef(null);
 
      const navigate = useNavigate();
 
+     
+     // CREATE URL WHEN ANY QUERY CHANGES
      const crateQueryUrl = useCallback(() => {
           let url = "";
           if (searchRef.current.value) url += `q=${searchRef.current.value}`
@@ -24,10 +27,14 @@ function Home() {
           setQueryUrl(url);
      }, [searchRef.current?.value, countryRef.current?.value, stateRef.current?.value])
 
+
+     // CALL THE EVENTS AGAIN FOR DIFFERENT QUERIES
      useEffect(() => {
           dispatch(getEventsAction(navigate, queryUrl))
      }, [queryUrl])
 
+
+     // GET THE FILTER OPTIONS DYNAMICALLY
      useEffect(() => {
           dispatch(getOptionsAction())
      }, [])

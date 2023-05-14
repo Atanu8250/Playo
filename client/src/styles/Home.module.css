@@ -136,23 +136,100 @@
 	flex: 2;
 }
 
+.Event bdi {
+	color: var(--color-3);
+}
+
+.Event>div:last-child>p {
+	font-size: 14px;
+}
+
 .Event>div:last-child>i {
 	color: var(--color-3);
 	font-size: 12px;
 }
 
-.ModalEventDetails {
-	margin-top: 15px;
+.EventDetails {
+	height: 100svh;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	gap: 15px;
 }
 
-.ModalEventDetails td,
-.ModalEventDetails th {
+.EventDetails button:disabled {
+	cursor: not-allowed;
+	background-color: rgba(30, 143, 255, 0.568);
+}
+
+.EventDetails button {
+	text-transform: capitalize;
+	border-radius: 16px;
+	padding: 10px 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	font-size: 18px;
+	letter-spacing: 1px;
+	font-weight: 600;
+	border: 1px solid transparent;
+	background-color: var(--primary-bg-color);
+	color: #fff;
+	transition: background-color ease 400ms;
+	cursor: pointer;
+}
+
+.EventDetails button:hover:not(:disabled) {
+	border: 1px solid dodgerblue;
+	background-color: transparent;
+	color: var(--primary-bg-color);
+}
+
+
+.EventDetails th {
+	color: var(--color-3);
+}
+
+.EventDetails td {
+	color: var(--color-1);
+	font-weight: 600;
+}
+
+.EventDetails td,
+.EventDetails th {
 	text-align: left;
 	text-transform: capitalize;
 	padding: 5px;
+}
+
+
+
+/* =============== RequestTable ============== */
+.RequestTable{
+	border: 1px solid red;
+	margin-inline: auto;
+}
+
+.RequestTable tr{
+	border: 1px solid black;
+	text-transform: capitalize;
+}
+
+.RequestTable th,
+.RequestTable td{
+	border: 1px solid blue;
+	padding: 2px 10px;
+}
+
+.RequestTable td:first-of-type{
+	color: green;
+}
+.RequestTable td:last-of-type{
+	color: red;
+}
+.RequestTable td{
+	padding-top: 10px;
+	font-size: 20px;
+	cursor: pointer;
 }

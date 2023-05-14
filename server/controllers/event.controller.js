@@ -68,13 +68,13 @@ const getAllEvents = async (req, res) => {
 
 
 /**
- * GET EVENTS WHICH ARE CREATED BY YOU ONLY
+ * GET EVENTS WHICH ARE CREATED BY SPECIFIC USER ONLY
  * */
 const getEventsCreatedBySpecificUser = async (req, res) => {
      const userId = req.headers.userId;
 
      try {
-          const events = await EventModel.find({ organisedBy: userId });
+          const events = await EventModel.find({ organisedBy: userId }).populate('participants', '-password');
           res.status(200).send({ message: 'success', data: events });
      } catch (error) {
           console.log('error:', error)

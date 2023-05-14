@@ -4,12 +4,14 @@ import PrivateRoute from './PrivateRoute';
 import Auth from '../pages/Auth';
 import Home from '../pages/Home';
 import Dashboard from '../pages/Dashboard';
+import EventDetails from '../components/EventDetails';
 
 function AllRoutes() {
      return (
           <Routes>
                <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>} />
                <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+               <Route path='/event/:eventId' element={<PrivateRoute><EventDetails /></PrivateRoute>} />
                <Route path='/auth' element={<Auth />} />
           </Routes>
      )

@@ -36,7 +36,7 @@ This is a clone of the Playo website, an online platform that helps people disco
 ***
 
 ### :small_blue_diamond: Dashboard page 
-![5]()
+![5](https://github.com/Atanu8250/Playo/assets/94675329/a21bef50-14e0-477f-8b09-435201e4a58f)
 
 ***
 

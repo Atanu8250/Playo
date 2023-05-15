@@ -34,25 +34,3 @@ function ShortApplication({ data }) {
 }
 
 export default ShortApplication
-
-/*
-createdAt : "2023-05-13T05:46:13.788Z"
-event : {
-     country : "America"
-     createdAt : "2023-05-13T05:41:23.196Z"
-     description : "hello, description"
-     endTime : "2023-05-13T00:00:00.000Z"
-     limit : 10
-     organisedBy : "645e9eb674ece0b8c7ae082b"
-     participants : ["645e9b8dbad603d5a85c404d"]
-     startTime : "2023-05-12T00:00:00.000Z"
-     state : "Prais"
-     title : "try 1 abhishek"
-     updatedAt : "2023-05-13T07:48:39.319Z"
-     _id : "645f2303b93023ed33254b0b"
-}
-status : "accepted"
-updatedAt : "2023-05-13T06:59:56.240Z"
-user : "645e9b8dbad603d5a85c404d"
-_id : "645f242560217d0e96ec5c91"
-*/ 

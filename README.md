@@ -72,3 +72,7 @@ The Playo was built using a combination of frontend technologies, including Reac
 If you have any questions or issues with the Playo, please contact our support team at atanu.karmakar201@gmail.com.
 
 # Thank you
+
+
+<!-- ![redux devtools](https://github.com/Atanu8250/Playo/assets/94675329/e38892bd-e5ed-4b89-8b91-538eedfe8ac3) -->
+
